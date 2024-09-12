@@ -1,11 +1,24 @@
-export class UsersService {
-  async getAllUsers() {
-    // Business logic to fetch all users from the database
-    return [{ id: 1, name: 'John Doe' }];
+import prisma from "../../config/database.config";
+import { UserModel } from "./models/user.modal";
+
+export class UserService {
+  async findByUsername(username: string): Promise<UserModel | null> {
+    return prisma.user.findUnique({ where: { username } });
   }
 
-  async getUserById(id: string) {
-    // Business logic to fetch a user by ID
-    return { id, name: 'John Doe' };
+  async findById(id: string): Promise<UserModel | null> {
+    return prisma.user.findUnique({ where: { id } });
+  }
+
+  async create(username: string, email: string, passwordHash: string): Promise<UserModel> {
+    return prisma.user.create({
+      data: {
+        username,
+        email,
+        passwordHash,
+      },
+    });
   }
 }
+
+export const userService = new UserService();

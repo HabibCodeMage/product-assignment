@@ -4,7 +4,7 @@ import usersRouter from './modules/users/users.module';
 import productsRouter from './modules/products/products.module';
 import authRouter from './modules/auth/auth.module';
 import { AppController } from './app.controller';
-
+import './config/database.config';
 const app: Express = express();
 
 // Middleware

@@ -1,13 +1,9 @@
 import { Router } from 'express';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { authenticate } from '../../middlewares/auth.middleware';
 
 const router = Router();
-const usersService = new UsersService();
-const usersController = new UsersController(usersService);
 
+router.use(authenticate);
 // Define routes
-router.get('/', usersController.getAllUsers.bind(usersController));
-router.get('/:id', usersController.getUserById.bind(usersController));
 
 export default router;
