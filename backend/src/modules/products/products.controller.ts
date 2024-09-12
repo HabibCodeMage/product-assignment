@@ -24,7 +24,10 @@ export class ProductsController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const products = await this.productService.getProducts();
+      const page = parseInt(req.query.page as string, 10) || 1;
+      const limit = parseInt(req.query.limit as string, 10) || 10;
+
+      const products = await this.productService.getProducts(page, limit);
       res.json(products);
     } catch (error) {
       console.error('Error fetching products:', error);

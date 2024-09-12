@@ -14,9 +14,13 @@ export class ProductsService {
     });
   }
 
-  async getProducts(): Promise<ProductModel[]> {
-    return await prisma.product.findMany();
-  }
+  async getProducts(page: number, limit: number): Promise<ProductModel[]> {
+    const skip = (page - 1) * limit;
+    return await prisma.product.findMany({
+      skip: skip,
+      take: limit,
+    });
+  }  
 
   async getProductById(id: string): Promise<ProductModel | null> {
     return await prisma.product.findUnique({

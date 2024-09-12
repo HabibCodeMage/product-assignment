@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import usersRouter from './modules/users/users.module';
 import productsRouter from './modules/products/products.module';
@@ -16,6 +16,17 @@ app.use(
     credentials: true, // enable set cookie with CORS
   })
 );
+
+const allowedOrigins = ['http://localhost:3000'];
+const checkOrigin = (req: Request, res: Response, next: NextFunction) => {
+  const origin = req.get('Origin');
+  if (allowedOrigins.includes(origin || '')) {
+    return next();
+  }
+  res.status(403).json({ message: 'Forbidden' });
+};
+
+app.use(checkOrigin);
 
 // Routes
 app.use('/users', usersRouter);
