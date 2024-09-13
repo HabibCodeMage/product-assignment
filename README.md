@@ -56,7 +56,7 @@ To stop the Docker containers, use:
 ```bash
 sudo docker-compose down
 ```
-### 6. Access the Application
+### 6. Additional Information
 
 **Backend**: The backend is built using Express and connects to PostgreSQL.
 **Frontend**: The frontend is a Next.js application that communicates with the backend.
