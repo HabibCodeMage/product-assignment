@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node": "20.15.0"
+    "node": "^20.15.0"
   },
   "scripts": {
     "build": "tsc",
@@ -53,5 +53,6 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha512.ff4579ab459bb25aa7c0ff75b62acebe576f6084b36aa842971cf250a5d8c6cd3bc9420b22ce63c7f93a0857bc6ef29291db39c3e7a23aab5adfd5a4dd6c5d71"
 }

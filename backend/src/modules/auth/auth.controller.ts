@@ -42,9 +42,9 @@ export class AuthController {
 
   async getUser(req: Request, res: Response) {
     const user = req.user as UserModel;
-   
-    const { passwordHash: _pass , ...userWithoutPassword } = user;
-    
+
+    const { passwordHash: _pass, ...userWithoutPassword } = user;
+
     res.status(200).json(userWithoutPassword);
   }
 }

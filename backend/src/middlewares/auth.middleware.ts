@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { authService } from '../modules/auth/auth.service';
 
-export async function authenticate(req: Request, res: Response, next: NextFunction) {
+export async function authenticate(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const token = req.headers.authorization?.split(' ')[1]; // Assumes 'Bearer <token>'
 
   if (!token) {
@@ -25,7 +29,12 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
       res.status(401).json({ message: 'Invalid token', error: error.message });
     } else {
       // Handle unexpected error types
-      res.status(401).json({ message: 'Invalid token', error: 'An unexpected error occurred' });
+      res
+        .status(401)
+        .json({
+          message: 'Invalid token',
+          error: 'An unexpected error occurred',
+        });
     }
   }
 }
