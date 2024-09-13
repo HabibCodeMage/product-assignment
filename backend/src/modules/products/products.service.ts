@@ -1,5 +1,5 @@
 import { ProductModel } from './models/product.model';
-import prisma from "../../config/database.config";
+import prisma from '../../config/database.config';
 
 export class ProductsService {
   async createProduct(data: {
@@ -14,13 +14,21 @@ export class ProductsService {
     });
   }
 
-  async getProducts(page: number, limit: number): Promise<ProductModel[]> {
+  async getProducts(
+    page: number,
+    limit: number,
+    userId: string
+  ): Promise<ProductModel[]> {
     const skip = (page - 1) * limit;
     return await prisma.product.findMany({
+      where: { userId },
       skip: skip,
       take: limit,
+      orderBy: {
+        createdAt: 'desc', // Sort by createdAt in descending order
+      },
     });
-  }  
+  }
 
   async getProductById(id: string): Promise<ProductModel | null> {
     return await prisma.product.findUnique({
@@ -28,12 +36,15 @@ export class ProductsService {
     });
   }
 
-  async updateProduct(id: string, data: {
-    name?: string;
-    description?: string;
-    price?: number;
-    filePaths?: string[];
-  }): Promise<ProductModel | null> {
+  async updateProduct(
+    id: string,
+    data: {
+      name?: string;
+      description?: string;
+      price?: number;
+      filePaths?: string[];
+    }
+  ): Promise<ProductModel | null> {
     return await prisma.product.update({
       where: { id },
       data,

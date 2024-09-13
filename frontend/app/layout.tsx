@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ErrorBoundary from "@/modules/common/ErrorBoundary";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/modules/common/contexts/AuthContext";
+import ProtectedLayout from "@/modules/common/layouts/ProtectedLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +32,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Toaster />
+        <ErrorBoundary>
+          <AuthProvider>
+            <ProtectedLayout>{children}</ProtectedLayout>
+          </AuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

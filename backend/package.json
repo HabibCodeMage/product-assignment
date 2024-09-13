@@ -23,12 +23,14 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^5.19.1",
+    "@types/multer": "^1.4.12",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
     "express": "^4.20.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",

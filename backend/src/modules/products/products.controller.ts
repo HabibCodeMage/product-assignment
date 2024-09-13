@@ -12,9 +12,17 @@ export class ProductsController {
     const user: UserModel = req.user; // Ensure `req.user` is properly typed
 
     try {
-      const filePaths = (req.files as Express.Multer.File[] || []).map((file) => file.path) || [];
-      
-      const product = await this.productService.createProduct({ name, description, price: +price, filePaths, userId: user.id });
+      const filePaths =
+        ((req.files as Express.Multer.File[]) || []).map((file) => file.path) ||
+        [];
+
+      const product = await this.productService.createProduct({
+        name,
+        description,
+        price: +price,
+        filePaths,
+        userId: user.id,
+      });
       res.status(201).json(product);
     } catch (error) {
       console.error('Error creating product:', error);
@@ -24,10 +32,15 @@ export class ProductsController {
 
   async getAll(req: Request, res: Response) {
     try {
+      const user = req.user as UserModel;
       const page = parseInt(req.query.page as string, 10) || 1;
       const limit = parseInt(req.query.limit as string, 10) || 10;
 
-      const products = await this.productService.getProducts(page, limit);
+      const products = await this.productService.getProducts(
+        page,
+        limit,
+        user.id
+      );
       res.json(products);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -35,7 +48,7 @@ export class ProductsController {
     }
   }
 
-  async getById(req: Request, res: Response) {  
+  async getById(req: Request, res: Response) {
     try {
       const { id } = req.params;
 
@@ -57,9 +70,9 @@ export class ProductsController {
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }
-      
+
       await this.productService.deleteProduct(id);
-      
+
       res.json({ message: 'Product deleted successfully' });
     } catch (error) {
       console.error('Error deleting product:', error);

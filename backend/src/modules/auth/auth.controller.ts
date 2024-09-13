@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { UserModel } from '../users/models/user.modal';
 export class AuthController {
   private authService: AuthService;
 
@@ -37,5 +38,13 @@ export class AuthController {
         res.status(500).json({ message: 'Internal server error' });
       }
     }
+  }
+
+  async getUser(req: Request, res: Response) {
+    const user = req.user as UserModel;
+   
+    const { passwordHash: _pass , ...userWithoutPassword } = user;
+    
+    res.status(200).json(userWithoutPassword);
   }
 }
